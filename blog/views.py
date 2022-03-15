@@ -3,6 +3,9 @@ from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
 from django.contrib.auth.models import User
 from django.views.generic.edit import CreateView
 from .models import Post
+from .serializer import JsonPost
+from rest_framework import viewsets
+import requests
 from django.views.generic import (
     ListView,
     DetailView,
@@ -12,13 +15,18 @@ from django.views.generic import (
     )
 
 # Create your views here.
+class Post_List(viewsets.ModelViewSet):
+    queryset = Post.objects.all()
+    serializer_class = JsonPost
 
-
-def home(request):
-    context = {"posts": Post.objects.all()}
-    return render(request, "pages/home.html", context)
-
-
+# -------use json in your website-------
+def get_data(request):
+    url='https://azizkra.pythonanywhere.com/postJS'
+    data=requests.get(url).json()
+    print('info: '+str(data[0]))
+    return render(request,'blog/data.html',{data:data})
+    
+    
 
 class PostListView(ListView):
     model = Post
@@ -39,7 +47,7 @@ class UserPostListView(ListView):
         user = get_object_or_404(User, username=self.kwargs.get('username'))
         return Post.objects.filter(author=user).order_by('-date_posted')
 
-    
+   
 
 
 

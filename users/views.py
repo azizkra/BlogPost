@@ -1,8 +1,23 @@
 from django.shortcuts import redirect, render
+from django.contrib.auth.models import User
+from .models import Profile
+from rest_framework import viewsets
+from blog.serializer import JsonProfile, JsonUser
 from django.contrib import messages
 from .forms import UserRegisterForms, UserUpdateForm, ProfileUpdateForm
 from django.contrib.auth.decorators import login_required
 # Create your views here.
+
+class Profile_List(viewsets.ModelViewSet):
+    queryset = Profile.objects.all()
+    serializer_class = JsonProfile
+
+class User_List(viewsets.ModelViewSet):
+    queryset = User.objects.all()
+    serializer_class = JsonUser
+    
+
+
 
 
 def register(requset):

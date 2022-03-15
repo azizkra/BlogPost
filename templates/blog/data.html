@@ -1,0 +1,27 @@
+<!doctype html>
+  <head>
+    <title>Hello, world!</title>
+  </head>
+  <body>
+    <h1>Hello, world!</h1>
+    <!-- to use json in your website -->
+    <table border="1px">
+        <tr>
+            <td>id</td>
+            <td>title</td>
+            <td>content</td>
+            <td>date_posted</td>
+            <td>author</td>  
+        </tr>
+    {% for d in data %}
+    <tr>
+        <td>{{d.id}}</td>
+        <td>{{d.title}}</td>
+        <td>{{d.content}}</td>
+        <td>{{d.date_posted}}</td>
+        <td>{{d.author}}</td>
+    </tr>
+    {% endfor %}
+    </table>
+  </body>
+</html>
